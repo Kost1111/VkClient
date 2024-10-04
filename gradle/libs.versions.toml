@@ -1,5 +1,6 @@
 [versions]
 agp = "8.6.1"
+androidSdkCore = "4.1.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -10,6 +11,8 @@ activityCompose = "1.9.2"
 composeBom = "2024.04.01"
 
 [libraries]
+android-sdk-api = { module = "com.vk:android-sdk-api", version.ref = "androidSdkCore" }
+android-sdk-core = { module = "com.vk:android-sdk-core", version.ref = "androidSdkCore" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

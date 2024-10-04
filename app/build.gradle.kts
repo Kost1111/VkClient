@@ -31,8 +31,9 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -69,8 +70,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.android.sdk.core)
     implementation(libs.android.sdk.api)
+    coreLibraryDesugaring(libs.desugar)
 
     implementation(projects.feature.auth.api)
     implementation(projects.feature.auth.impl)
-
 }

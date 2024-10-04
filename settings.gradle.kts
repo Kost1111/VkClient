@@ -1,18 +1,15 @@
 pluginManagement {
+    includeBuild("convention-plugins")
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
-        mavenCentral()
         gradlePluginPortal()
+        google()
+        mavenCentral()
     }
 }
+
+@Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
@@ -20,5 +17,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "VkClient"
+
 include(":app")
- 
+include(":feature:auth:api")
+include(":feature:auth:impl")

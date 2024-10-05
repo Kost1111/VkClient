@@ -1,5 +1,4 @@
 pluginManagement {
-    includeBuild("convention-plugins")
     repositories {
         gradlePluginPortal()
         google()
@@ -17,7 +16,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "VkClient"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+includeBuild("convention-plugins")
 include(":app")
 include(":feature:auth:api")
 include(":feature:auth:impl")

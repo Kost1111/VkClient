@@ -1,7 +1,9 @@
 plugins {
-    id("feature-module")
+  id("feature-module")
 }
 
+android.namespace = "com.vkClient.feature.auth.impl"
+
 dependencies {
-    implementation(projects.feature.auth.api)
+
 }

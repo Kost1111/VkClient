@@ -1,6 +1,6 @@
 [versions]
 androidSdkCore = "4.1.0"
-kotlin = "1.9.0"
+kotlin = "1.9.22"
 dagger = "2.51"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -13,8 +13,15 @@ gradle = "8.3.2"
 jetbrainsKotlinJvm = "1.9.0"
 appcompat = "1.7.0"
 material = "1.12.0"
-kotlinCompilerExtension = "1.5.1"
 desugar = "2.1.2"
+jvmTarget = "17"
+kotlinter = "3.14.0"
+
+androidCompileSdkVersion = "34"
+androidMinSdkVersion = "26"
+
+kotlinCompilerExtension = "1.5.10"
+
 
 [libraries]
 #dagger
@@ -44,10 +51,15 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+gradlePlugin-ktlint = { module = "org.jmailen.gradle:kotlinter-gradle", version.ref = "kotlinter" }
+
 desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
+
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "gradle" }
 android-application = { id = "com.android.application", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }

@@ -7,7 +7,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
@@ -22,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             VkClientTheme {
                 val launcher = rememberLauncherForActivityResult(
-                    contract = VK.getVKAuthActivityResultContract()
+                    contract = VK.getVKAuthActivityResultContract(),
                 ) { result ->
                     when (result) {
                         is VKAuthenticationResult.Success -> {
@@ -41,10 +40,9 @@ class MainActivity : ComponentActivity() {
                 val token = VKAccessToken.restore(storage)
                 Log.i("tag2", token.toString())
                 if (VK.isLoggedIn()) {
-                    Log.i("tag3" , "LoggedIn")
-                }
-                else {
-                    Log.i("tag3" , "NotLoggedIn")
+                    Log.i("tag3", "LoggedIn")
+                } else {
+                    Log.i("tag3", "NotLoggedIn")
                 }
             }
         }

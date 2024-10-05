@@ -1,20 +1,21 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-conventions")
+    id("com.android.application")
+    kotlin("android")
+    id("lint")
 }
 
 android {
     namespace = "com.vkclient"
-    compileSdk = 34
+    compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
 
     defaultConfig {
         applicationId = "com.vkclient"
-        minSdk = 26
-        targetSdk = 33
+        compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
+        minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -36,13 +37,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "18"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -53,24 +54,29 @@ android {
 
 dependencies {
 
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.android.sdk.core)
+    implementation(libs.android.sdk.api)
+    coreLibraryDesugaring(libs.desugar)
+
+
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.android.sdk.core)
-    implementation(libs.android.sdk.api)
-    coreLibraryDesugaring(libs.desugar)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
 
     implementation(projects.feature.auth.api)
     implementation(projects.feature.auth.impl)

@@ -1,30 +1,55 @@
-import config.AppConfig
-import ext.libDesugar
-import ext.libs
+@file:Suppress("UnstableApiUsage")
+
+val libs = project.extensions.getByName("libs") as org.gradle.accessors.dm.LibrariesForLibs
 
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("kotlin-conventions")
+
 }
 
 android {
-    namespace = "com.vkclient"
-    compileSdk = AppConfig.compileSdk
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
+    compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
 
     defaultConfig {
-        minSdk = AppConfig.minSdk
+        compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+        multiDexEnabled = true
+        minSdk = 26
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        targetCompatibility = JavaVersion.VERSION_18
         sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
+    }
+    kotlinOptions {
+        jvmTarget = "18"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.libDesugar)
+    coreLibraryDesugaring(libs.desugar)
+
+
 }
 

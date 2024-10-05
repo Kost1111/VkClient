@@ -1,28 +1,26 @@
-import ext.libComposeBom
-import ext.libComposeMaterial3
-import ext.libComposePreview
-import ext.libComposeTooling
-import ext.libComposeUi
-import ext.libComposeUiGraphics
-import ext.libKotlinCompilerExt
-import ext.libs
 
 plugins {
     id("android-module")
 }
+val libs = project.extensions.getByName("libs") as org.gradle.accessors.dm.LibrariesForLibs
 
 android {
-    buildFeatures.compose = true
-    composeOptions.kotlinCompilerExtensionVersion =  libs.libKotlinCompilerExt
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
 }
 
 dependencies {
-    implementation(platform(libs.libComposeBom))
-    implementation(libs.libComposeUi)
-    implementation(libs.libComposeUiGraphics)
-    implementation(libs.libComposePreview)
-    implementation(libs.libComposeMaterial3)
-
-    debugImplementation(libs.libComposeTooling)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    debugImplementation(libs.androidx.ui.tooling)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
 }
 

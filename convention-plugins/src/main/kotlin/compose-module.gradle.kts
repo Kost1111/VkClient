@@ -1,4 +1,3 @@
-
 plugins {
     id("android-module")
 }

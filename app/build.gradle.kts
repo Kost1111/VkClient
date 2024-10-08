@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("lint")
+    id("kotlin-kapt")
 }
 
 android {
@@ -33,14 +34,15 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "18"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
@@ -67,6 +69,10 @@ dependencies {
     implementation(libs.android.sdk.api)
     coreLibraryDesugaring(libs.desugar)
 
+    implementation(libs.dagger.dagger)
+    kapt(libs.dagger.compiler)
+
+    implementation(libs.bundles.networkDependencies)
 
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -77,6 +83,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
+    implementation(projects.core.network)
 
     implementation(projects.feature.auth.api)
     implementation(projects.feature.auth.impl)

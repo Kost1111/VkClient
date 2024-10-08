@@ -86,5 +86,6 @@ dependencies {
     implementation(projects.core.network)
 
     implementation(projects.feature.auth.api)
-    implementation(projects.feature.auth.impl)
+    
+    implementation(projects.feature.feed.api)
 }

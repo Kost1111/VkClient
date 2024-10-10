@@ -14,7 +14,6 @@ class VkClientApp : Application() {
 
         _appComponent = DaggerAppComponent.builder()
             .app(this)
-            .context(this)
             .build()
     }
 }

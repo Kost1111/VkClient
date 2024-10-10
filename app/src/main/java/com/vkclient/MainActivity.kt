@@ -7,7 +7,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import com.feature.feed.impl.ui.Screen
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
@@ -16,6 +18,7 @@ import com.vk.api.sdk.auth.VKScope
 import com.vkclient.applicattion.VkClientApp
 import com.vkclient.ui.theme.VkClientTheme
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,7 +44,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         (applicationContext as VkClientApp).appComponent.inject(this)
-        val scope = CoroutineScope(Job())
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
 
         fun performAuthResult(result: VKAuthenticationResult) {
             scope.launch {
@@ -59,36 +62,37 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VkClientTheme {
-                val launcher = rememberLauncherForActivityResult(
-                    contract = VK.getVKAuthActivityResultContract(),
-                ) {
-                    Log.e("TEST1", "launcher")
-                    performAuthResult(it)
-                }
 
-                val state = authState.collectAsState()
-                LaunchedEffect(launcher, state) {
-                    when (state.value) {
-                        AuthState.Auth -> {
-                            launcher.launch(listOf(VKScope.WALL, VKScope.FRIENDS))
-
-                            val storage = VKPreferencesKeyValueStorage(application)
-                            val token = VKAccessToken.restore(storage)
-
-                            useCase(token!!.accessToken)
-
-                            Log.e("TEST1", "Auth")
-                        }
-
-                        AuthState.NotAuth -> {
-                            launcher.launch(listOf(VKScope.WALL, VKScope.FRIENDS))
-                            Log.e("TEST1", "Not Auth")
-                        }
-
-                        else -> {}
-                    }
-                }
+                Screen()
+//                val launcher = rememberLauncherForActivityResult(
+//                    contract = VK.getVKAuthActivityResultContract(),
+//                ) {
+//                    Log.e("TEST1", "launcher")
+//                    performAuthResult(it)
+//                }
+//
+//                val state = authState.collectAsState()
+//                LaunchedEffect(state.value) {
+//                    Log.e("TEST1", "${state.value} state")
+//                    when (state.value) {
+//                        AuthState.Auth -> {
+//                            Log.e("TEST1", "Auth state")
+//                            launcher.launch(listOf(VKScope.WALL))
+//                            val storage = VKPreferencesKeyValueStorage(application)
+//                            val token = VKAccessToken.restore(storage)
+//                            // useCase(token!!.accessToken)
+//                        }
+//
+//                        AuthState.NotAuth -> {
+//                            launcher.launch(listOf())
+//                            Log.e("TEST1", "Not Auth state")
+//                        }
+//
+//                        else -> {}
+//                    }
+//                }
             }
         }
     }
 }
+

@@ -25,6 +25,7 @@ androidCompileSdkVersion = "34"
 androidMinSdkVersion = "26"
 
 kotlinCompilerExtension = "1.5.10"
+navigation = "2.8.0"
 
 
 [libraries]
@@ -65,7 +66,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 gradlePlugin-ktlint = { module = "org.jmailen.gradle:kotlinter-gradle", version.ref = "kotlinter" }
 
 desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
-
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "gradle" }

@@ -88,4 +88,5 @@ dependencies {
     implementation(projects.feature.auth.api)
     
     implementation(projects.feature.feed.api)
+    implementation(projects.feature.feed.impl)
 }

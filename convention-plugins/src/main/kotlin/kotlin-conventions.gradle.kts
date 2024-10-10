@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 tasks.withType<KotlinCompile> {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_18)
+        jvmTarget.set(JvmTarget.JVM_17)
         freeCompilerArgs.set(
             listOf(
                 "-Xallow-result-return-type",

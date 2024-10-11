@@ -1,6 +1,7 @@
 package com.vkclient.di
 
 import android.app.Application
+import android.content.Context
 import com.core.network.di.NetworkModule
 import com.vkclient.MainActivity
 import com.core.network.di.viewModel.ViewModelFactoryModule
@@ -21,11 +22,11 @@ interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
 
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun app(app: Application): Builder
-        fun build(): AppComponent
+    @Component.Factory
+    interface Factory {
+        fun create(
+            @BindsInstance
+            context: Application,
+        ): AppComponent
     }
 }

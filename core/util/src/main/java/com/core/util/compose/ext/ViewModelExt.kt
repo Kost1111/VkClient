@@ -1,4 +1,4 @@
-package com.core.util
+package com.core.util.compose.ext
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-
-
-
 
 @Composable
 inline fun <reified VM : ViewModel> rememberDaggerViewModel(

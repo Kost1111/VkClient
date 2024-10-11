@@ -4,8 +4,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.sp
-import com.core.util.CustomViewModelStoreOwner
-import com.core.util.rememberDaggerViewModel
+import com.core.util.compose.ext.CustomViewModelStoreOwner
+import com.core.util.compose.ext.rememberDaggerViewModel
 import com.feature.feed.impl.di.DaggerFeedComponent
 
 @Composable

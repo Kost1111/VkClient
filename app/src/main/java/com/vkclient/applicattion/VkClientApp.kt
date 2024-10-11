@@ -12,8 +12,6 @@ class VkClientApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        _appComponent = DaggerAppComponent.builder()
-            .app(this)
-            .build()
+        _appComponent = DaggerAppComponent.factory().create(this)
     }
 }

@@ -25,7 +25,7 @@ androidCompileSdkVersion = "34"
 androidMinSdkVersion = "26"
 
 kotlinCompilerExtension = "1.5.10"
-navigation = "2.8.0"
+navigation = "2.8.2"
 
 
 [libraries]

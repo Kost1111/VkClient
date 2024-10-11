@@ -20,8 +20,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 includeBuild("convention-plugins")
 include(":app")
-include(":feature:auth:api")
-include(":feature:auth:impl")
 include(":core:network")
 include(":feature:feed")
 include(":feature:feed:api")

@@ -1,24 +1,68 @@
 package com.feature.feed.impl.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.sp
-import com.core.util.compose.ext.CustomViewModelStoreOwner
-import com.core.util.compose.ext.rememberDaggerViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.feature.feed.impl.di.DaggerFeedComponent
 
 @Composable
-fun Screen() {
-    val customOwner = remember { CustomViewModelStoreOwner() }
+fun AppNavigation() {
+    val navHostController = rememberNavController()
 
-    val feedViewModel: FeedViewModel = rememberDaggerViewModel(
-        owner = customOwner,
-        factoryProvider = { DaggerFeedComponent.factory().create().getViewModelFactory() }
-    )
-
-    Text(text = feedViewModel.getLog(), fontSize = 35.sp)
+    NavHost(
+        navController = navHostController,
+        startDestination = "Screen1"
+    ) {
+        composable("Screen1") {
+            Screen(navHostController)
+        }
+        composable("Screen2") {
+            Screen2(navHostController)
+        }
+    }
 }
+
+@Composable
+fun Screen(navController: NavController) {
+    val viewModel: FeedViewModel =
+        viewModel(factory = DaggerFeedComponent.factory().create().getViewModelFactory())
+
+    Column {
+        Text(text = viewModel.getLog(), fontSize = 35.sp)
+
+        Button(onClick = {
+            navController.navigate("Screen2")
+
+        }) {
+            Text("Go to Screen 2")
+        }
+    }
+}
+
+@Composable
+fun Screen2(navController: NavController) {
+    val viewModel: FeedViewModel =
+        viewModel(factory = DaggerFeedComponent.factory().create().getViewModelFactory())
+
+    Column {
+        Text(text = viewModel.getLog(), fontSize = 35.sp)
+
+        Button(onClick = {
+            navController.navigateUp()
+        }) {
+            Text("Back to Screen 1")
+        }
+    }
+}
+
+
 
 
 

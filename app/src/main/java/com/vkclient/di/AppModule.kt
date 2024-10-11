@@ -1,18 +1,14 @@
 package com.vkclient.di
 
-import com.core.network.retrofit.RetrofitHolder
-import com.vkclient.ApiService
+import com.feature.feed.impl.di.FeedModule
+import com.vkclient.presentation.auth.navigation.AuthFeatureApi
+import com.vkclient.presentation.auth.navigation.AuthFeatureImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
 
-@Module
-interface AppModule {
+@Module(includes = [MainViewModelModule::class, FeedModule::class])
+internal interface AppModule {
 
-    companion object {
-        @Singleton
-        @Provides
-        fun provideApiService(holder: RetrofitHolder): ApiService =
-            holder.retrofit.create(ApiService::class.java)
-    }
+    @Binds
+    fun bindFeatureApi(authFeatureImpl: AuthFeatureImpl): AuthFeatureApi
 }

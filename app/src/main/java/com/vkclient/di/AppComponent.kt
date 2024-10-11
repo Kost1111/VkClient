@@ -1,26 +1,29 @@
 package com.vkclient.di
 
 import android.app.Application
-import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import com.core.network.di.NetworkModule
-import com.vkclient.MainActivity
 import com.core.network.di.viewModel.ViewModelFactoryModule
 import com.core.network.di.viewModel.ViewModelModule
+import com.core.util.scope.AppScope
+import com.vkclient.presentation.MainActivity
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
 
-@Singleton
+@AppScope
 @Component(
     modules = [
         NetworkModule::class,
         AppModule::class,
         ViewModelModule::class,
-        ViewModelFactoryModule::class],
+        ViewModelFactoryModule::class,
+    ],
 )
 interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
+
+    fun getViewModelFactory(): ViewModelProvider.Factory
 
     @Component.Factory
     interface Factory {

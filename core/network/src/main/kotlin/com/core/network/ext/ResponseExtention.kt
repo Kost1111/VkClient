@@ -1,4 +1,4 @@
-package com.vkclient.utill
+package com.core.network.ext
 
 import retrofit2.Response
 

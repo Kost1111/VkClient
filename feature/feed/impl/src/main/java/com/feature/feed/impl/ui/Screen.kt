@@ -21,7 +21,6 @@ fun AppNavigation() {
         startDestination = "Screen1"
     ) {
         composable("Screen1") {
-            Screen(navHostController)
         }
         composable("Screen2") {
             Screen2(navHostController)
@@ -30,18 +29,17 @@ fun AppNavigation() {
 }
 
 @Composable
-fun Screen(navController: NavController) {
+fun Screen(
+    back: () -> Unit,
+) {
     val viewModel: FeedViewModel =
         viewModel(factory = DaggerFeedComponent.factory().create().getViewModelFactory())
 
     Column {
         Text(text = viewModel.getLog(), fontSize = 35.sp)
 
-        Button(onClick = {
-            navController.navigate("Screen2")
-
-        }) {
-            Text("Go to Screen 2")
+        Button(onClick = back) {
+            Text("Back")
         }
     }
 }

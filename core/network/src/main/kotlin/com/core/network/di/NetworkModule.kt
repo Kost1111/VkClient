@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Module
 interface NetworkModule {
 
-    @Singleton
+
     @Binds
     fun bindRetrofitHolder(retrofitHolderImpl: RetrofitHolderImpl): RetrofitHolder
 }

@@ -68,7 +68,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 gradlePlugin-ktlint = { module = "org.jmailen.gradle:kotlinter-gradle", version.ref = "kotlinter" }
 
 desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 
 [plugins]

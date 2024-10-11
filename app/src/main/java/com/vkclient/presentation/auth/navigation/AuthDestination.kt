@@ -1,8 +1,8 @@
-package com.vkclient.navigation
+package com.vkclient.presentation.auth.navigation
 
 import com.core.util.compose.navigation.NavigationComposeEntry
 
-internal sealed class AuthDestination(route: String): NavigationComposeEntry {
+internal sealed class AuthDestination(route: String) : NavigationComposeEntry {
 
     override val baseRoute = "$COMMON_AUTH_ROUTE/$route"
 

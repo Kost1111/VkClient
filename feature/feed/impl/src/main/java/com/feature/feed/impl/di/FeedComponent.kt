@@ -10,7 +10,7 @@ import javax.inject.Scope
 
 @FeedScope
 @Component (
-    modules = [NetworkModule::class, ViewModelFactoryModule::class, FeedViewModelModule::class]
+    modules = [NetworkModule::class, ViewModelFactoryModule::class, FeedViewModelModule::class, FeedModule::class]
 )
 interface FeedComponent {
 

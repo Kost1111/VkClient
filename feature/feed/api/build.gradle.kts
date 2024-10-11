@@ -1,7 +1,9 @@
 plugins {
-    id("kotlin-module")
+    id("feature-module")
 }
 
-dependencies {
+android.namespace = "com.vkClient.feature.feed.api"
 
+dependencies {
+    implementation(projects.core.util)
 }

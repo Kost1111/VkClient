@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.core.util.compose.navigation.FeatureApi
 import com.core.util.compose.navigation.NavigationComposeEntry
 
-abstract class CoreTabFeatureApi(val tabRoute: NavigationComposeEntry) : FeatureApi {
+abstract class CoreTabFeatureApi (val tabRoute: NavigationComposeEntry) : FeatureApi {
 
     @Composable
     abstract fun TabScreen()

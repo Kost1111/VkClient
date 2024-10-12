@@ -6,12 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.core.util.compose.navigation.registerGraph
 import com.feature.feed.api.api.FeedFeatureApi
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
 import com.vkclient.applicattion.VkClientApp
 import com.vkclient.presentation.auth.navigation.AuthFeatureApi
+import com.vkclient.presentation.root.navigation.AppFeatureApi
+import com.vkclient.presentation.root.screen.AppContent
+import com.vkclient.presentation.root.screen.BottomBarContent
 import com.vkclient.ui.theme.VkClientTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +28,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var feedFeatureApi: FeedFeatureApi
 
+    @Inject
+    lateinit var appFeatureApi: AppFeatureApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as VkClientApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -37,18 +42,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VkClientTheme {
-                val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = authFeatureApi.auth.getComposableRoute(),
-                ) {
-                    registerGraph(
-                        featureApi = authFeatureApi,
-                    )
-                    registerGraph(
-                        featureApi = feedFeatureApi,
-                    )
-                }
+                AppContent(
+                    appFeatureApi = appFeatureApi,
+                    authFeatureApi = authFeatureApi,
+                )
             }
         }
     }

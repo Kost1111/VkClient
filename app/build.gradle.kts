@@ -3,6 +3,9 @@ plugins {
     kotlin("android")
     id("lint")
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version "1.9.0"
+
+
 }
 
 android {
@@ -83,6 +86,7 @@ dependencies {
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
 
     implementation(projects.core.network)
 

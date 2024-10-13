@@ -19,8 +19,7 @@ internal class AuthFeatureImpl @Inject constructor() : AuthFeatureApi {
             composable(
                 route = AuthDestination.Auth.getComposableRoute(),
             ) {
-                AuthScreen {
-                }
+                AuthScreen()
             }
         }
     }

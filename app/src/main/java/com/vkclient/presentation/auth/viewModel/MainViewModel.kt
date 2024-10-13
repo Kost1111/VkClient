@@ -1,6 +1,9 @@
 package com.vkclient.presentation.auth.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.core.util.compose.navigation.NavigationManager
+import com.feature.feed.api.api.FeedFeatureApi
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.auth.VKAuthenticationResult
 import com.vkclient.presentation.auth.model.AuthState
@@ -9,7 +12,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-internal class MainViewModel @Inject constructor() : ViewModel() {
+internal class MainViewModel @Inject constructor(
+    private val navigationManager: NavigationManager,
+    private val feedFeatureApi: FeedFeatureApi,
+) : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
@@ -24,6 +30,11 @@ internal class MainViewModel @Inject constructor() : ViewModel() {
         } else {
             _authState.value = AuthState.NotAuthorized
         }
+    }
+
+    fun goToFeed() {
+        Log.e("TEST1", "goToFeed: ${feedFeatureApi.feedPost.getComposableRoute()}")
+        navigationManager.navigateTo(feedFeatureApi.feedPost.getComposableRoute())
     }
 
     fun performAuthResult(result: VKAuthenticationResult) {

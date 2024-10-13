@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
+import com.core.util.compose.navigation.NavigationManager
 import com.feature.feed.api.api.FeedFeatureApi
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
@@ -13,7 +12,6 @@ import com.vkclient.applicattion.VkClientApp
 import com.vkclient.presentation.auth.navigation.AuthFeatureApi
 import com.vkclient.presentation.root.navigation.AppFeatureApi
 import com.vkclient.presentation.root.screen.AppContent
-import com.vkclient.presentation.root.screen.BottomBarContent
 import com.vkclient.ui.theme.VkClientTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +29,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var appFeatureApi: AppFeatureApi
 
+    @Inject
+    lateinit var navigationManager: NavigationManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as VkClientApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -45,6 +46,8 @@ class MainActivity : ComponentActivity() {
                 AppContent(
                     appFeatureApi = appFeatureApi,
                     authFeatureApi = authFeatureApi,
+                    feedFeatureApi = feedFeatureApi,
+                    navigationManager = navigationManager,
                 )
             }
         }

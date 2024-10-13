@@ -20,9 +20,7 @@ import com.vkclient.presentation.auth.viewModel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun AuthScreen(
-    goToFeed: () -> Unit,
-) {
+fun AuthScreen() {
     val component = (LocalContext.current.applicationContext as VkClientApp).appComponent
     val viewModel: MainViewModel = viewModel(factory = component.getViewModelFactory())
 
@@ -41,7 +39,9 @@ fun AuthScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
-                Button(onClick = goToFeed) {
+                Button(
+                    onClick = viewModel::goToFeed,
+                ) {
                     Text(text = "Go to Feed")
                 }
             }

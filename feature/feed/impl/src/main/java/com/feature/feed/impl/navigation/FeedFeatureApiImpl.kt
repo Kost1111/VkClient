@@ -10,21 +10,20 @@ import com.feature.feed.api.api.FeedFeatureApi
 import com.feature.feed.impl.ui.Screen
 import javax.inject.Inject
 
-class FeedFeatureApiImpl @Inject constructor() : FeedFeatureApi {
-
+class FeedFeatureApiImpl @Inject constructor()  : FeedFeatureApi {
     override val feedPost = FeedDestinations.Feed.getComposableRoute().createEntryPoint()
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         extras: Bundle?
     ) {
-//        with(navGraphBuilder) {
-//            composable(
-//                route = FeedDestinations.Feed.getComposableRoute(),
-//            ) {
-//                Screen {
-//                }
-//            }
-//        }
+        with(navGraphBuilder) {
+            composable(
+                route = FeedDestinations.Feed.getComposableRoute(),
+            ) {
+                Screen {
+                }
+            }
+        }
     }
 }

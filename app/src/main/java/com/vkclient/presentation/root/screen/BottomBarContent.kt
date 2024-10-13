@@ -23,7 +23,7 @@ import com.vkclient.R
 
 @Composable
 internal fun BottomBarContent(
-    tabsFeatureApis: Map<CoreTabType, CoreTabFeatureApi>
+    tabsFeatureApis: Map<CoreTabType, CoreTabFeatureApi>,
 ) {
     val tabsRoutes = remember {
         tabsFeatureApis
@@ -53,15 +53,16 @@ internal fun BottomBarContent(
                                 }
                             }
                         },
-                        icon = { Icon(
-                            painter = painterResource(id = android.R.drawable.ic_menu_add),
-                            contentDescription = null,
-                        ) },
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = android.R.drawable.ic_menu_add),
+                                contentDescription = null,
+                            )
+                        },
                     )
                 }
             }
-
-        }
+        },
     ) {
         val startRoute = remember { tabsRoutes.keys.first() }
 
@@ -73,5 +74,4 @@ internal fun BottomBarContent(
             tabsFeatureApis.values.forEach { tabFeatureApi -> registerGraph(tabFeatureApi) }
         }
     }
-
 }

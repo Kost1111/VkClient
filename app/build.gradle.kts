@@ -1,3 +1,4 @@
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -62,7 +63,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -86,11 +87,18 @@ dependencies {
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(projects.core.network)
 
     implementation(projects.feature.feed.api)
     implementation(projects.feature.feed.impl)
+
+    implementation(projects.feature.messenger.api)
+    implementation(projects.feature.messenger.impl)
+
+    implementation(projects.feature.profile.api)
+    implementation(projects.feature.profile.impl)
+
     implementation(projects.core.util)
 }

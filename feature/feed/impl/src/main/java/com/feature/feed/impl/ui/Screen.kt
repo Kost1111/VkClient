@@ -7,26 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.feature.feed.impl.di.DaggerFeedComponent
-
-@Composable
-fun AppNavigation() {
-    val navHostController = rememberNavController()
-
-    NavHost(
-        navController = navHostController,
-        startDestination = "Screen1"
-    ) {
-        composable("Screen1") {
-        }
-        composable("Screen2") {
-            Screen2(navHostController)
-        }
-    }
-}
 
 @Composable
 fun Screen(

@@ -1,11 +1,14 @@
 package com.vkclient.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.core.util.compose.navigation.NavigationManager
 import com.feature.feed.api.api.FeedFeatureApi
+import com.feature.messenger.api.api.MessengerFeatureApi
+import com.feature.profile.api.api.ProfileFeatureApi
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
 import com.vkclient.applicattion.VkClientApp
@@ -32,6 +35,12 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigationManager: NavigationManager
 
+    @Inject
+    lateinit var messengerFeatureApi: MessengerFeatureApi
+
+    @Inject
+    lateinit var profileFeatureApi: ProfileFeatureApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as VkClientApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -40,14 +49,15 @@ class MainActivity : ComponentActivity() {
         val storage = VKPreferencesKeyValueStorage(application)
         val token = VKAccessToken.restore(storage)
 
+        Log.i("tag1", "${token!!.accessToken}")
+
         enableEdgeToEdge()
         setContent {
             VkClientTheme {
                 AppContent(
+                    navigationManager = navigationManager,
                     appFeatureApi = appFeatureApi,
                     authFeatureApi = authFeatureApi,
-                    feedFeatureApi = feedFeatureApi,
-                    navigationManager = navigationManager,
                 )
             }
         }

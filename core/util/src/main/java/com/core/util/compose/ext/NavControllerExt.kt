@@ -1,13 +1,11 @@
 package com.core.util.compose.ext
 
-import android.util.Log
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.core.util.compose.navigation.NavigationActions
 import com.core.util.compose.navigation.NavigationCommand
 
 fun NavHostController.processNavigationCommand(navigationCommand: NavigationCommand) {
-    Log.e("TEST1", "processNavigationCommand: $navigationCommand")
     when (navigationCommand.actions) {
         NavigationActions.BACK -> {
             navigationCommand
@@ -27,7 +25,6 @@ fun NavHostController.processNavigationCommand(navigationCommand: NavigationComm
                 .destination
                 ?.ifBlank { null }
                 ?.let { destination ->
-                    Log.e("TEST1", "FORWARD")
                     navigate(destination)
                 }
         }

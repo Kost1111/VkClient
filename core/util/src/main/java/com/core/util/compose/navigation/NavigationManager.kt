@@ -1,7 +1,7 @@
 package com.core.util.compose.navigation
 
-import android.util.Log
 import androidx.navigation.NamedNavArgument
+import com.core.util.scope.AppScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,6 +22,7 @@ data class NavigationCommand(
     val arguments: List<NamedNavArgument> = emptyList(),
 )
 
+@AppScope
 class NavigationManager @Inject constructor() {
     private val _commands = MutableSharedFlow<NavigationCommand>(
         replay = 1,
@@ -31,8 +32,8 @@ class NavigationManager @Inject constructor() {
     val commands: SharedFlow<NavigationCommand> = _commands.asSharedFlow()
 
     fun navigateTo(direction: String) {
-        Log.e("TEST1", "NavigationManager navigateTo: direction $direction")
-        _commands.tryEmit(NavigationCommand(NavigationActions.FORWARD, direction))
+        val command = NavigationCommand(NavigationActions.FORWARD, direction)
+        _commands.tryEmit(command)
     }
 
     fun back() {

@@ -23,7 +23,5 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     implementation(libs.navigation.compose)
 
-    implementation (libs.androidx.navigation.compose.v253)
-
 }
 

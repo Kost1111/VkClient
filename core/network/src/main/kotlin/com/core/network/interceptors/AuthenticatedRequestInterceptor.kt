@@ -13,7 +13,6 @@ internal class AuthenticatedRequestInterceptor : Interceptor {
                 .build()
 
             newBuilder()
-                .addHeader("Authorization", "Bearer ${BuildConfig.VK_ACCESS_TOKEN}")
                 .url(url)
                 .build()
         }

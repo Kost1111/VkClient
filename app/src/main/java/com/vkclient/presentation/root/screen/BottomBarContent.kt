@@ -4,14 +4,22 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -19,7 +27,6 @@ import androidx.navigation.compose.rememberNavController
 import com.core.util.compose.navigation.coreTab.CoreTabFeatureApi
 import com.core.util.compose.navigation.coreTab.CoreTabType
 import com.core.util.compose.navigation.registerGraph
-import com.vkclient.R
 
 @Composable
 internal fun BottomBarContent(
@@ -38,13 +45,15 @@ internal fun BottomBarContent(
     Scaffold(
         modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
         bottomBar = {
-            tabsRoutes.forEach { tab ->
-                NavigationBar {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.onPrimary,
+            ) {
+                tabsRoutes.forEach { (route, tabType) ->
                     NavigationBarItem(
-                        selected = tab.key == currentRoute,
+                        selected = route == currentRoute,
                         onClick = {
-                            if (tab.key != currentRoute) {
-                                navController.navigate(tab.key) {
+                            if (route != currentRoute) {
+                                navController.navigate(route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
@@ -55,10 +64,20 @@ internal fun BottomBarContent(
                         },
                         icon = {
                             Icon(
-                                painter = painterResource(id = android.R.drawable.ic_menu_add),
+                                imageVector = getTabIcon(tabType),
                                 contentDescription = null,
+                                tint = if (route == currentRoute) MaterialTheme.colorScheme.primary else Color.Gray,
                             )
                         },
+                        label = {
+                            Text(
+                                text = getTabLabel(tabType),
+                                color = if (route == currentRoute) MaterialTheme.colorScheme.primary else Color.Gray,
+                            )
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            indicatorColor = Color.Transparent,
+                        ),
                     )
                 }
             }
@@ -71,7 +90,28 @@ internal fun BottomBarContent(
             navController = navController,
             startDestination = startRoute,
         ) {
-            tabsFeatureApis.values.forEach { tabFeatureApi -> registerGraph(tabFeatureApi) }
+            tabsFeatureApis.values.forEach { tabFeatureApi ->
+                registerGraph(tabFeatureApi)
+            }
         }
+    }
+}
+
+@Composable
+fun getTabIcon(tabType: CoreTabType): ImageVector {
+    return when (tabType) {
+        CoreTabType.FEED_TAB -> Icons.Default.Home
+        CoreTabType.MESSENGER_TAB -> Icons.Default.Email
+        CoreTabType.PROFILE_TAB -> Icons.Default.Person
+        else -> Icons.Default.Home
+    }
+}
+
+fun getTabLabel(tabType: CoreTabType): String {
+    return when (tabType) {
+        CoreTabType.FEED_TAB -> "Feed"
+        CoreTabType.MESSENGER_TAB -> "Messenger"
+        CoreTabType.PROFILE_TAB -> "Profile"
+        else -> "Other"
     }
 }

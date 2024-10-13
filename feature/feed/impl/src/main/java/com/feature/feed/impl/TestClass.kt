@@ -1,5 +1,3 @@
 package com.feature.feed.impl
 
-class TestClass {
-
-}
+class TestClass

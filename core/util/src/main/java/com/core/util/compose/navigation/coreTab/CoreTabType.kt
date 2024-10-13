@@ -4,6 +4,8 @@ import dagger.MapKey
 
 enum class CoreTabType {
     FEED_TAB,
+    MESSENGER_TAB,
+    PROFILE_TAB
 }
 
 @MapKey

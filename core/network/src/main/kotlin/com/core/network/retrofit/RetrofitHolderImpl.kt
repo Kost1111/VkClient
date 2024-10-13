@@ -20,7 +20,7 @@ class RetrofitHolderImpl @Inject constructor() : RetrofitHolder {
 
     private fun buildOkhttp() = OkHttpClient.Builder()
         .apply {
-            /*addInterceptor(AuthenticatedRequestInterceptor())*/
+            addInterceptor(AuthenticatedRequestInterceptor())
             addNetworkInterceptor(
                 HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY

@@ -1,15 +1,12 @@
 package com.vkclient.presentation.auth.screen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vk.api.sdk.VK
@@ -32,19 +29,15 @@ fun AuthScreen() {
             viewModel.performAuthResult(result)
         },
     )
+    val scope = rememberCoroutineScope()
 
     when (state.value) {
         AuthState.Authorized -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Button(
-                    onClick = viewModel::goToFeed,
-                ) {
-                    Text(text = "Go to Feed")
-                }
-            }
+//            LaunchedEffect(Unit) {
+//                scope.launch {
+            viewModel.goToFeed()
+//                }
+//            }
         }
 
         AuthState.NotAuthorized -> {

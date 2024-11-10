@@ -5,6 +5,12 @@ plugins {
     id("kotlin-kapt")
 }
 
+android {
+    kapt {
+        correctErrorTypes = true
+    }
+}
+
 dependencies {
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)

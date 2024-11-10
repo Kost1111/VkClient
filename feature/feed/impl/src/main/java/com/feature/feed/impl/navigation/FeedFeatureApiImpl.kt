@@ -1,13 +1,11 @@
 package com.feature.feed.impl.navigation
 
 import android.os.Bundle
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.core.util.compose.navigation.createEntryPoint
 import com.feature.feed.api.api.FeedFeatureApi
-import com.feature.feed.impl.ui.Screen
+import com.feature.feed.impl.ui.FeedScreen
 import javax.inject.Inject
 
 class FeedFeatureApiImpl @Inject constructor()  : FeedFeatureApi {
@@ -21,7 +19,8 @@ class FeedFeatureApiImpl @Inject constructor()  : FeedFeatureApi {
             composable(
                 route = FeedDestinations.Feed.getComposableRoute(),
             ) {
-                Screen {
+                FeedScreen {
+
                 }
             }
         }

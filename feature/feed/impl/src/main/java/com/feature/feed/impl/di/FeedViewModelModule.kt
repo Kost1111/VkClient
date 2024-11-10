@@ -10,7 +10,6 @@ import dagger.multibindings.IntoMap
 @Module
 interface FeedViewModelModule {
 
-    @FeedScope
     @Binds
     @IntoMap
     @ViewModelKey(FeedViewModel::class)

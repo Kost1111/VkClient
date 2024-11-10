@@ -11,13 +11,16 @@ import javax.inject.Inject
 class ProfileRepository @Inject constructor(private val apiService: ProfileApiService) :
     IProfileRepository {
 
-    override suspend fun getProfile(token: String): WallEntity =
+    override suspend fun getProfile(): Result<WallEntity> = runCatching {
         withContext(Dispatchers.IO) {
-            apiService.getWall(token).call().response.toEntity()
+            apiService.getWall().call().response?.toEntity()
+                ?: throw TechException("Error in mapping")
         }
-
+    }
 
     override suspend fun getCurrentBoard() {
 
     }
+
+    private class TechException(errorMes: String): Exception(errorMes)
 }

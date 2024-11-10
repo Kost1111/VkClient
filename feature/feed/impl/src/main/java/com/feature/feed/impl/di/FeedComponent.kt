@@ -1,27 +1,25 @@
 package com.feature.feed.impl.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.core.network.di.NetworkModule
-import com.core.network.di.viewModel.ViewModelFactoryModule
 import com.core.util.scope.FeatureScope
-import dagger.Component
+import dagger.Subcomponent
 import javax.inject.Scope
 
-
-@FeedScope
-@Component (
-    modules = [NetworkModule::class, ViewModelFactoryModule::class, FeedViewModelModule::class, FeedModule::class]
+@FeatureScope
+@Subcomponent (
+    modules = [
+        FeedViewModelModule::class,
+        FeedModule::class
+    ]
 )
 interface FeedComponent {
 
-    @Component.Factory
+    @Subcomponent.Factory
     interface Factory {
         fun create(): FeedComponent
     }
 
-    @FeedScope
     fun getViewModelFactory(): ViewModelProvider.Factory
-
 }
 
 @Scope

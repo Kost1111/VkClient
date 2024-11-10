@@ -1,7 +1,10 @@
 package com.vkclient.di
 
+import com.core.network.di.NetworkComponent
+import com.feature.feed.impl.di.FeedComponent
 import com.feature.feed.impl.di.FeedModule
 import com.feature.messenger.impl.di.MessengerModule
+import com.feature.profile.impl.di.ProfileComponent
 import com.feature.profile.impl.di.ProfileModule
 import com.vkclient.presentation.auth.navigation.AuthFeatureApi
 import com.vkclient.presentation.auth.navigation.AuthFeatureImpl
@@ -11,8 +14,13 @@ import dagger.Binds
 import dagger.Module
 
 @Module(
+    subcomponents = [
+        FeedComponent::class,
+        NetworkComponent::class,
+        ProfileComponent::class,
+    ],
     includes = [
-        MainViewModelModule::class,
+        ViewModelModule::class,
         FeedModule::class,
         MessengerModule::class,
         ProfileModule::class,

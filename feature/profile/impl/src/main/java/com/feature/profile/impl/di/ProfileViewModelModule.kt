@@ -9,7 +9,7 @@ import dagger.multibindings.IntoMap
 
 
 @Module
-interface ProfileViewModelModule {
+internal interface ProfileViewModelModule {
 
     @Binds
     @IntoMap

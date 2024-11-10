@@ -12,4 +12,6 @@ dependencies {
     implementation(projects.core.util)
     implementation(projects.core.network)
     implementation(libs.bundles.networkDependencies)
+    implementation(libs.android.sdk.core)
+    implementation(libs.android.sdk.api)
 }

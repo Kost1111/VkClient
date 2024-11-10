@@ -1,17 +1,13 @@
 package com.vkclient.applicattion
 
 import android.app.Application
-import com.vkclient.di.AppComponent
-import com.vkclient.di.DaggerAppComponent
+import com.vkclient.di.DiProvider
+import com.vkclient.di.SubComponents
 
-class VkClientApp : Application() {
-
-    private var _appComponent: AppComponent? = null
-    val appComponent: AppComponent get() = requireNotNull(_appComponent)
+class VkClientApp : Application(), SubComponents {
 
     override fun onCreate() {
         super.onCreate()
-
-        _appComponent = DaggerAppComponent.factory().create(this)
+        DiProvider.buildDi(this)
     }
 }

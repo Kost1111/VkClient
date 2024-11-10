@@ -1,22 +1,29 @@
 package com.core.network.interceptors
-import com.core.network.ApiConstants.API_VERSION
-import com.core.network.BuildConfig
+
 import okhttp3.Interceptor
 import okhttp3.Response
 
-internal class AuthenticatedRequestInterceptor : Interceptor {
+internal class AuthenticatedRequestInterceptor(
+    private val accessToken: String,
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().apply {
-            val url = url.newBuilder()
-                .addQueryParameter("v", API_VERSION)
-                .build()
+        var request = chain.request()
 
-            newBuilder()
-                .url(url)
-                .build()
-        }
+        val url = request.url
+            .newBuilder()
+            .addQueryParameter(ACCESS_TOKEN_NAME, accessToken)
+            .addQueryParameter(VERSION_NAME, API_VERSION)
+            .build()
+
+        request = request.newBuilder().url(url).build()
 
         return chain.proceed(request)
+    }
+
+    private companion object {
+        const val ACCESS_TOKEN_NAME = "access_token"
+        const val VERSION_NAME = "v"
+        const val API_VERSION = "5.199"
     }
 }

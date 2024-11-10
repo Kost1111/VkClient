@@ -7,19 +7,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.auth.VKScope
-import com.vkclient.applicattion.VkClientApp
+import com.vkclient.di.DiProvider
 import com.vkclient.presentation.auth.model.AuthState
 import com.vkclient.presentation.auth.viewModel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun AuthScreen() {
-    val component = (LocalContext.current.applicationContext as VkClientApp).appComponent
-    val viewModel: MainViewModel = viewModel(factory = component.getViewModelFactory())
+    val viewModel: MainViewModel = viewModel(factory = DiProvider.appComponent().getViewModelFactory())
 
     val state = viewModel.authState.collectAsState(Dispatchers.Main.immediate)
 

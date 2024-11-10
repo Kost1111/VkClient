@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-internal interface MainViewModelModule {
+internal interface ViewModelModule {
 
     @AppScope
     @Binds

@@ -32,8 +32,7 @@ class NavigationManager @Inject constructor() {
     val commands: SharedFlow<NavigationCommand> = _commands.asSharedFlow()
 
     fun navigateTo(direction: String) {
-        val command = NavigationCommand(NavigationActions.FORWARD, direction)
-        _commands.tryEmit(command)
+        _commands.tryEmit(NavigationCommand(NavigationActions.FORWARD, direction))
     }
 
     fun back() {

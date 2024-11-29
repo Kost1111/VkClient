@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.core.network.di.NetworkComponent
 import com.core.network.di.NetworkModule
 import com.core.network.di.viewModel.ViewModelFactoryModule
-import com.core.network.di.viewModel.ViewModelModule
 import com.core.util.scope.AppScope
 import com.feature.feed.impl.di.FeedComponent
 import com.feature.profile.impl.di.ProfileComponent
@@ -18,7 +17,6 @@ import dagger.Component
     modules = [
         NetworkModule::class,
         AppModule::class,
-        ViewModelModule::class,
         ViewModelFactoryModule::class,
     ],
 )

@@ -38,9 +38,7 @@ internal fun BottomBarContent(
             .sortedBy { it.key.ordinal }
             .associate { it.value.tabRoute.getComposableRoute() to it.key }
     }
-
     val navController = rememberNavController()
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     Scaffold(
         modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
@@ -48,6 +46,8 @@ internal fun BottomBarContent(
             NavigationBar(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ) {
+                val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
                 tabsRoutes.forEach { (route, tabType) ->
                     NavigationBarItem(
                         selected = route == currentRoute,

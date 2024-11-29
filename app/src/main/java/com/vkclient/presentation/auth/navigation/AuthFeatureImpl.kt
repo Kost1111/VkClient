@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 internal class AuthFeatureImpl @Inject constructor() : AuthFeatureApi {
 
-    override val auth = AuthDestination.Auth.getComposableRoute().createEntryPoint()
+    override val auth = AuthDestination.Auth().createEntryPoint()
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
@@ -17,7 +17,7 @@ internal class AuthFeatureImpl @Inject constructor() : AuthFeatureApi {
     ) {
         with(navGraphBuilder) {
             composable(
-                route = AuthDestination.Auth.getComposableRoute(),
+                route = AuthDestination.Auth(),
             ) {
                 AuthScreen()
             }

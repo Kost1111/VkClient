@@ -14,4 +14,7 @@ dependencies {
     implementation(libs.bundles.networkDependencies)
     implementation(libs.android.sdk.core)
     implementation(libs.android.sdk.api)
+
+    implementation("com.google.accompanist:accompanist-permissions:0.36.0")
+    implementation( "io.coil-kt:coil-compose:2.7.0")
 }

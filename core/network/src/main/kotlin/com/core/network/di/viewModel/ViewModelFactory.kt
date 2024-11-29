@@ -10,6 +10,6 @@ class ViewModelFactory @Inject constructor(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return viewModelProviders[modelClass]?.get() as T
+        return viewModelProviders[modelClass]?.get() as? T ?: throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }
 }

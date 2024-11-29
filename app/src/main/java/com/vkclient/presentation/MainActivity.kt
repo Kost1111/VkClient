@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.remember
 import com.core.util.compose.navigation.NavigationManager
 import com.feature.feed.api.api.FeedFeatureApi
 import com.feature.messenger.api.api.MessengerFeatureApi
@@ -21,13 +22,13 @@ class MainActivity : ComponentActivity() {
     lateinit var authFeatureApi: AuthFeatureApi
 
     @Inject
+    lateinit var navigationManager: NavigationManager
+
+    @Inject
     lateinit var feedFeatureApi: FeedFeatureApi
 
     @Inject
     lateinit var appFeatureApi: AppFeatureApi
-
-    @Inject
-    lateinit var navigationManager: NavigationManager
 
     @Inject
     lateinit var messengerFeatureApi: MessengerFeatureApi
@@ -42,10 +43,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VkClientTheme {
+                val featureApiList = remember {
+                    buildList {
+                        add(authFeatureApi)
+                        add(appFeatureApi)
+                        add(feedFeatureApi)
+                        add(messengerFeatureApi)
+                        add(profileFeatureApi)
+                    }
+                }
                 AppContent(
                     navigationManager = navigationManager,
-                    appFeatureApi = appFeatureApi,
-                    authFeatureApi = authFeatureApi,
+                    featureApi = featureApiList,
                 )
             }
         }

@@ -6,8 +6,8 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import com.core.util.compose.ext.FileExt
-import com.core.util.compose.ext.FileExt.toUri
 import java.io.File
+import java.util.UUID
 import javax.inject.Inject
 
 data class Music(
@@ -17,10 +17,16 @@ data class Music(
     val artist: String,
     val duration: Int,
     val path: String,
-    val pictureUri: String?,
-)
+    val pictureUri: File?,
+) {
+    companion object {
+        fun default() = Music(
+            "", "", "", "", 0, "", File("default")
+        )
+    }
+}
 
-class ContentResolver @Inject constructor(private val context: Application) {
+class ContentResolver @Inject constructor(context: Application) {
     private val contentResolver = context.contentResolver
     private val externalCashDir: File? = context.externalCacheDir
 
@@ -44,23 +50,21 @@ class ContentResolver @Inject constructor(private val context: Application) {
                         extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toIntOrNull()
                             ?: 0
                     val pictureUri = embeddedPicture?.run {
-                        val file =
-                            FileExt.createExternalCashDir(
-                                externalCashDir,
-                                this,
-                                this.size.toString()
-                            )
-                        file?.toUri(context)
+                        FileExt.createExternalCashDir(
+                            externalCashDir,
+                            this,
+                            this.size.toString()
+                        )
                     }
 
                     val music = Music(
-                        id = uri.toString(),
+                        id = UUID.randomUUID().toString(),
                         title = title,
                         album = album,
                         artist = artist,
                         duration = duration,
                         path = uri.toString(),
-                        pictureUri = pictureUri?.toString(),
+                        pictureUri = pictureUri,
                     )
 
                     return if (music.isValidatedDuration()) music else null

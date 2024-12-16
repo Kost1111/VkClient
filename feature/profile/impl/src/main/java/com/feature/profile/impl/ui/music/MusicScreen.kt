@@ -25,16 +25,20 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.core.util.compose.components.BaseTopBar
+import com.core.util.compose.ext.FileExt.toUri
 import com.core.util.compose.ext.formatMinutesAndSeconds
 import com.core.util.compose.ext.getViewModel
 import com.core.util.compose.file.Music
@@ -60,6 +65,16 @@ internal fun MusicScreen() {
 
     val state by viewModel.state.collectAsStateWithLifecycle(context = Dispatchers.Main.immediate)
 
+    LaunchedEffect(Unit) {
+        viewModel.bindService()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.unBindService()
+        }
+    }
+
     when {
         state.loading -> {
             Box(
@@ -73,9 +88,11 @@ internal fun MusicScreen() {
 
         else -> {
             Content(
+                musics = state.musics.toList(),
+                isPlaying = state.isPlaying,
                 getAudioFileInfo = { uri -> viewModel.getAudioFromUri(uri) },
                 back = viewModel::back,
-                musics = state.musics.toList(),
+                playPause = viewModel::playPause,
             )
         }
     }
@@ -85,8 +102,10 @@ internal fun MusicScreen() {
 @Composable
 private fun Content(
     musics: List<Music>,
+    isPlaying: Boolean,
     getAudioFileInfo: (Uri) -> Unit,
     back: () -> Unit,
+    playPause: () -> Unit,
 ) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
@@ -146,7 +165,9 @@ private fun Content(
                     ) {
                         MusicItem(
                             music = it,
-                            onItemClick = { }
+                            isPlaying = isPlaying,
+                            onItemClick = { },
+                            playPause = playPause,
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
@@ -171,11 +192,15 @@ private fun Content(
 @Composable
 fun MusicItem(
     music: Music,
+    isPlaying: Boolean,
     modifier: Modifier = Modifier,
     color: Color = Color.LightGray.copy(alpha = 0.3f),
     shape: Shape = RoundedCornerShape(8.dp),
-    onItemClick: () -> Unit
+    onItemClick: () -> Unit,
+    playPause: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Box(
         modifier = modifier
             .background(color, shape)
@@ -191,7 +216,7 @@ fun MusicItem(
                     .padding(3.dp)
                     .size(50.dp),
                 painter = rememberAsyncImagePainter(
-                    model = music.pictureUri,
+                    model = music.pictureUri?.toUri(context),
                     placeholder = painterResource(R.drawable.ic_music),
                     error = painterResource(R.drawable.ic_music),
                 ),
@@ -216,6 +241,15 @@ fun MusicItem(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             }
+            IconButton(
+                modifier = Modifier.padding(end = 20.dp),
+                onClick = playPause
+            ) {
+                Icon(
+                    painter = painterResource(id = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play),
+                    contentDescription = null,
+                )
+            }
             Text(
                 modifier = Modifier.weight(0.2f),
                 textAlign = TextAlign.Center,
@@ -231,8 +265,10 @@ fun MusicItem(
 @Composable
 private fun MusicScreenPreview() {
     Content(
+        musics = listOf(Music("2", "sfsfsfsdsdsd", "sfdsfdf", "sfsdfdfd", 13456, "", null)),
+        isPlaying = false,
         getAudioFileInfo = {},
         back = {},
-        musics = listOf(Music("2", "sfsfsfsdsdsd", "sfdsfdf", "sfsdfdfd", 13456, "", null)),
+        playPause = {},
     )
 }

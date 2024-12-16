@@ -2,6 +2,7 @@ package com.vkclient.di
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
+import com.core.network.di.CoroutineScopeModule
 import com.core.network.di.NetworkComponent
 import com.core.network.di.NetworkModule
 import com.core.network.di.viewModel.ViewModelFactoryModule
@@ -18,6 +19,7 @@ import dagger.Component
         NetworkModule::class,
         AppModule::class,
         ViewModelFactoryModule::class,
+        CoroutineScopeModule::class,
     ],
 )
 interface AppComponent {

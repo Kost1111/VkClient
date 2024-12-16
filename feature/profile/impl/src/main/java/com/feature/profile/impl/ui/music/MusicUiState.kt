@@ -8,6 +8,10 @@ internal data class MusicUiState(
     val musics: Set<Music> = emptySet(),
     val loading: Boolean = false,
     val error: Boolean = false,
+    val currentMusic: Music = Music.default(),
+    val currentDuration: Float = 0f,
+    val maxDuration: Float = 0f,
+    val isPlaying: Boolean = false,
 ) {
     fun loading() = copy(loading = true, error = false)
 

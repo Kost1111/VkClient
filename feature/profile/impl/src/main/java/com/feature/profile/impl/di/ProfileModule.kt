@@ -8,6 +8,8 @@ import com.feature.profile.api.api.ProfileFeatureApi
 import com.feature.profile.api.repository.IProfileRepository
 import com.feature.profile.impl.data.api.ProfileApiService
 import com.feature.profile.impl.data.api.ProfileRepository
+import com.feature.profile.impl.data.repository.MusicRepository
+import com.feature.profile.impl.doman.repository.IMusicRepository
 import com.feature.profile.impl.navigation.ProfileFeatureApiImpl
 import com.feature.profile.impl.navigation.ProfileTabFeatureImpl
 import dagger.Binds
@@ -28,6 +30,9 @@ interface ProfileModule {
 
     @Binds
     fun bindProfileRepository(profileRepository: ProfileRepository): IProfileRepository
+
+    @Binds
+    fun bindMusicRepository(musicRepository: MusicRepository): IMusicRepository
 
     companion object {
         @Provides

@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.core.util.compose.file.ContentResolver
 import com.core.util.compose.navigation.NavigationManager
+import com.feature.profile.impl.doman.repository.IMusicRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +19,7 @@ import javax.inject.Inject
 internal class MusicViewModel @Inject constructor(
     private val contentResolver: ContentResolver,
     private val navigationManager: NavigationManager,
+    private val repository: IMusicRepository,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<MusicUiState> = MutableStateFlow(MusicUiState())
@@ -34,6 +38,36 @@ internal class MusicViewModel @Inject constructor(
             }
         }
     }
+
+    fun bindService() {
+        viewModelScope.launch {
+            repository.bindMusicService()
+            collectMusicData()
+        }
+    }
+
+    private suspend fun collectMusicData() {
+        combine(
+            repository.currentMusic(),
+            repository.currentDuration(),
+            repository.maxDuration(),
+            repository.isPlaying(),
+        ) { currentMusic, currentDuration, maxDuration, isPlaying ->
+            _state.update {
+                it.copy(
+                    currentMusic = currentMusic,
+                    currentDuration = currentDuration,
+                    maxDuration = maxDuration,
+                    isPlaying = isPlaying,
+                )
+            }
+        }.collect()
+    }
+
+    fun playPause() = repository.playPause(_state.value.musics.toList())
+
+    fun unBindService() = repository.unBindService()
+
 
     fun back() = navigationManager.back()
 }
